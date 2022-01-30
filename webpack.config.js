@@ -9,16 +9,16 @@ module.exports = {
         tickets: './assets/js/tickets.js'
     },
     output: {
-        filename: '[name].bundle.js',
-        path: __dirname + '/dist'
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
             {
-                test: /\.jpg$/i,
+                test: /\.(png|jpe?g|gif)$/i,
                 use: [
                     {
-                        loader: 'file-loader',
+                        loader: "file-loader",
                         options: {
                             esModule: false,
                             name (file) {
