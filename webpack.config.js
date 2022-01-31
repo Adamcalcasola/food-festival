@@ -1,8 +1,10 @@
-const path = require('path');
 const webpack = require('webpack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
 const WebpackPwaManifest = require("webpack-pwa-manifest");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-module.exports = {
+const path = require('path');
+
+const config = {
     entry: {
         app: './assets/js/script.js',
         events: './assets/js/events.js',
@@ -10,8 +12,8 @@ module.exports = {
         tickets: './assets/js/tickets.js'
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.js',
+        path: `${__dirname}/dist`
     },
     module: {
         rules: [
@@ -22,10 +24,10 @@ module.exports = {
                         loader: "file-loader",
                         options: {
                             esModule: false,
-                            name (file) {
+                            name(file) {
                                 return "[path][name].[ext]"
                             },
-                            publicPath: function(url) {
+                            publicPath(url) {
                                 return url.replace("../", "/assets/")
                             }
                         }
@@ -43,7 +45,7 @@ module.exports = {
             jQuery: "jquery"
         }),
         new BundleAnalyzerPlugin({
-            analyzerMode: "static", // the report outputs to an HTML file in the dist folder
+            analyzerMode: "disable", // the report outputs to an HTML file in the dist folder
         }),
         new WebpackPwaManifest({
             name: "Food Event",
@@ -63,3 +65,5 @@ module.exports = {
     ],
     mode: 'development'
 };
+
+module.exports = config;
